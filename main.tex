@@ -1,0 +1,297 @@
+\documentclass{beamer}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{color}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+\usetheme{CambridgeUS}
+\usecolortheme{crane}
+
+%\setbeamertemplate{headline}{\scriptsize{\vspace*{0.3cm}\hspace*{0.3cm}\insertpagenumber}}
+\AtBeginSection[]
+{
+  \begin{frame}
+  \frametitle{Table of Contents}
+  \tableofcontents[currentsection]
+  \end{frame}
+}
+
+
+
+\title{Proof of Weierstrass Approximation Theorem with Bernstein Polynomials}
+\author[Fazil Amirli]{Fazil AMIRLI}
+\institute[Atilim University]{Atilim University, Department of Mathematics\\
+\bigskip
+{\color{red} Instructor: Prof. Dr. Mehmet TURAN }
+}
+\date{January 2024}
+
+\begin{document}
+\frame{\titlepage}
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents[pausesections]
+\end{frame}
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+
+In this presentation, we will state \textbf{Weierstrass approximation theorem} and provide some historical information about the theorem. The theorem firstly stated by Karl Theodor Wilhelm Weierstrass, who was a German mathematician often cited as the "father of modern analysis"\cite{bell1986men}. Despite leaving university without a degree, he studied mathematics and trained as a school teacher, eventually teaching mathematics, physics, botany, and gymnastics. He later received an honorary doctorate and became professor of mathematics in Berlin.
+\end{frame}
+
+\begin{frame}
+\frametitle{Introduction}
+Among many other contributions, Weierstrass formalized the definition of the continuity of a function and complex analysis, proved the intermediate value theorem and the Bolzano-Weierstrass theorem, and used the later to study the properties of continuous functions on closed bounded intervals. The theorem states that every continuous function defined on a closed interval $[a, b]$ can be uniformly approximated as closely as desired by a polynomial function. The original version of this result was established by Karl Weierstrass himself in 1885, while he was 70, using the Weierstrass transform.
+
+\end{frame}
+\begin{frame}{Uniform Convergence}
+    \begin{definition}\cite{rudin1976principles}
+    We say that a sequence of functions $\{f_n\}$, $n = 1, 2, 3, \dots, $ converges uniformly on $E$ to a function $f$ if for every $\epsilon > 0$ there is an integer $N$ such that $n \geq N$ implies
+    \begin{equation}
+        |f_n(x) - f(x)| < \epsilon
+    \end{equation}
+    for all $x \in E$.
+\end{definition}
+\pause
+\begin{example}
+    Let $0 < b < 1$ and consider the sequence of functions $\{f_n\}$ defined on $[0, b]$ by $f_n(x) = x^n$. Then, $\{f_n\}$ converges to $0$ \textit{uniformly} on $[0, b]$.To see this, take any integer $N > \frac{\ln{\epsilon}}{\ln{b}}$, then for every $n \geq N$, we have $b^n < \epsilon.$ Which implies $|x^n-0| \leq b^n < \epsilon$.
+\end{example}
+ \end{frame}
+\begin{frame}
+\begin{example}
+    Now consider, the sequence of functions $\{f_n\}$ defined on $\mathbb{R}$ such that $f_n(x) = \frac{x^2+nx}{n}$. This sequence of functions converges to $x$, but not uniformly.
+    Since for each fixed $x$, we have
+    \begin{equation*}
+        \vert f_n(x)-x\vert=\left|\frac{x^2}{n}+x-x\right| = \left|\frac{x^2}{n}\right|\rightarrow0 \text{ as } n \rightarrow \infty.
+    \end{equation*}
+    We have $\{f_n(x)\}\rightarrow x$. Now, since we cannot find any $n$ such that, $\frac{x^2}{n} < \epsilon$, for every $x \in \mathbb{R}$, we do not have a uniform convergence.
+\end{example}
+\end{frame}
+\section{Bernstein Polynomials}
+\begin{frame}{Sergei Natanovich Bernstein}
+\cite{bernstein2023encyclopedia}Sergei Natanovich Bernstein, also known as Serguei Bernshtein, was a distinguished Soviet mathematician, whose contributions to the field of mathematics are highly valued. Born on March 5, 1880, in Odessa, Bernstein exhibited a strong inclination towards mathematics from an early age. He pursued higher education in mathematics at the University of Paris (Sorbonne), where he was influenced by the work of the renowned mathematician Henri Poincaré.
+\end{frame}
+\begin{frame}{Sergei Natanovich Bernstein}
+    He held several positions, including a professorship at the University of Kharkov and at the Institute of Mathematics of the Ukrainian Academy of Sciences. Bernstein's research interests were vast, encompassing areas such as \textbf{probability, statistics, and function theory}. He is best known for Bernstein polynomials, which are foundational in the field of approximation theory and were key in his proof of the Stone-Weierstrass theorem.
+\end{frame}
+
+\begin{frame}{Sergei Natanovich Bernstein}
+    Despite facing political challenges during the Soviet era, Bernstein maintained his academic pursuits and contributed significantly to the mathematical community until his passing on October 26, 1968, in Moscow. His legacy endures, with Bernstein polynomials continuing to be a fundamental tool in \textbf{numerical analysis and approximation theory}, some of which will be discussed later in this presentation.
+\end{frame}
+\begin{frame}{Bernstein Polynomials}
+\begin{definition}
+  Given a function $f$ on $[0, 1]$, the Bernstein polynomial of $f$ of degree $n$ is
+\begin{equation}
+B_n(f; x) = \sum_{r=0}^n  f\left(\frac{r}{n}\right) \binom{n}{r} x^r (1-x)^{n-r}
+\label{bern}
+\end{equation}
+for each positive integer $n$. 
+\end{definition}
+    
+
+It is clear from \eqref{bern} that for all $n \geq 1$,
+\begin{equation}
+    B_n(f;0)=f(0) \quad \text{and} \quad B_n(f;1)=f(1).
+\end{equation}
+\end{frame}
+\begin{frame}{Bernstein Polynomials}
+ \begin{block}{}
+    It follows from the binomial expansion that
+\begin{equation}
+B_n(1; x) = \sum_{r=0}^n \binom{n}{r} x^r (1-x)^{n-r}=(x+(1-x))^n=1
+\label{bern_1}
+\end{equation}
+\end{block}
+\pause
+ \begin{block}{}
+Since $\frac{r}{n} \binom{n}{r} = \binom{n-1}{r-1}
+$
+for $1 \leq r \leq n$, the Bernstein polynomial for the function $x$ is 
+\begin{align}
+B_n(x; x) &= \sum_{r=0}^n \frac{r}{n} \binom{n}{r} x^r (1-x)^{n-r} = x \sum_{r=1}^n \binom{n-1}{r-1} x^{r-1}(1-x)^{n-r} \nonumber\\
+ &= x \sum_{s=0}^{n-1} \binom{n-1}{s} x^s (1-x)^{n-1-s} = xB_{n-1}(1; x) = x.\label{bern_x}
+\end{align}
+\end{block}
+\end{frame}
+\begin{frame}
+    \begin{example}
+   \begin{equation}
+       \label{bernx2}
+       B_n(x^2;x) = x^2 + \frac{x(1-x)}{n}.
+   \end{equation}
+   
+       We have
+       \begin{align*}
+           B_n(x^2;x)
+           &=\sum_{k=0}^n\frac{k^2}{n^2}\binom{n}{k}x^k(1-x)^{n-k}\\
+           &=x\sum_{k=1}^n\frac{k}{n}\binom{n-1}{k-1}x^{k-1}(1-x)^{n-k}\\
+           &=\frac{x}{n}\sum_{k=1}^nk\binom{n-1}{k-1}x^{k-1}(1-x)^{n-k}\\
+           &=\frac{x}{n}\sum_{s=0}^{n-1}(s+1)\binom{n-1}{s}x^s(1-x)^{n-s-1}\\
+       \end{align*}
+\end{example}
+\end{frame}
+\begin{frame}{Example cont'd}
+    \begin{align*}
+         =\frac{x}{n}\sum_{s=0}^{n-1}s\binom{n-1}{s}x^s(1-x)^{n-s-1}+\frac{x}{n}\sum_{s=0}^{n-1}\binom{n-1}{s}x^s(1-x)^{n-s-1}\\
+           =\frac{x}{n}\sum_{s=0}^{n-1}\frac{s}{n-1}(n-1)\binom{n-1}{s}x^s(1-x)^{n-s-1}+\frac{x}{n}\\
+           =\frac{x^2(n-1)}{n}+\frac{x}{n}\\
+           =x^2 + \frac{x(1-x)}{n}.
+    \end{align*}
+\end{frame}
+\begin{frame}{Bernstein Polynomials}
+    We call $B_n$ the \textit{Bernstein operator}; it maps a function $f$, defined on $[0, 1]$ to $B_nf$, where the function $B_nf$ evaluated at x is denoted by $B_n(f;x).$ The Bernstein operator is obviously linear, since it follows from (\ref{bern}) that \begin{equation}
+B_n(\lambda f + \mu g) = \lambda B_{n}f + \mu B_{n}g
+\label{bern_linear}
+\end{equation}
+for all functions $f$ and $g$ defined on $[0, 1]$, and all real $\lambda$ and $\mu$.
+\begin{definition}
+Let $L$ denote a linear operator that maps a function $f$ defined on $[a, b]$ to a function $Lf$ defined on $[c, d]$. Then $L$ is said to be a \textit{monotone} operator or, equivalently, a \textit{positive} operator if
+\begin{equation}
+    f(x) \geq g(x), \ x \in [a, b] \Rightarrow (Lf)(x) \geq (Lg)(x), \ Lf(x) \in [c, d],
+\end{equation} 
+where $(Lf)(x)$ denotes the value of $Lf$ at the point $x \in [a, b]$.
+\end{definition}
+We can see from (\ref{bern}) that $B_n$ is a monotone operator.
+\end{frame}
+\begin{frame}{Bernstein Polynomials}
+    It then follows from the monotonicity of $B_n$ and (\ref{bern_1}) that
+\begin{equation}
+m \leq f(x) \leq M, \ x \in [0, 1] \Rightarrow m \leq B_n(f;x) \leq M, \ x \in [0, 1].
+\label{monotonicity}
+\end{equation}
+In particular, if we choose $m=0$ in (\ref{monotonicity}), we obtain
+\begin{equation}
+  f(x) \geq 0, \ x \in [0, 1] \Rightarrow B_n(f;x) \geq 0, \ x \in [0, 1].
+\end{equation}
+It follows from (\ref{bern_1}), $(\ref{bern_x})$, and the linear property (\ref{bern_linear}) that
+\begin{equation}
+    B_n(ax+b;x) = ax + b,
+\end{equation}
+for all real $a$ and $b$. We therefore say that the Bernstein operator \textit{reproduces} linear polynomials. The Bernstein operator does not reproduce any polynomial of degree greater than one\cite{phillips2003interpolation}.
+\end{frame}
+
+
+\section{Proof of Weierstrass Approximation Theorem with Bernstein Polynomials}
+\begin{frame}{Weierstrass Approximation Theorem}
+    \begin{theorem}{\bf (Weierstrass Approximation Theorem)}
+    Let $f \in C[a, b]$. Given $\epsilon > 0$, one can find a polynomial $p_n(x)$ for which
+\begin{equation}
+    |f(x) - p_n(x)| \leq \epsilon, \quad a \leq x \leq b.
+    \label{weierstrass}
+\end{equation}
+\end{theorem}
+\end{frame}
+\begin{frame}{Proof}
+    Notice that the linear transformation $y=(x-a)/(b-a)$ converts the interval $[a,b]$ into $[0,1].$ For this reason, it will be enough to consider $[0,1]$ instead of $[a,b].$
+
+   We will give the proof of theorem presented in \cite{phillips2003interpolation}. Begin with the identity
+   \begin{equation*}
+       \left(\frac{r}{n}-x\right)^2 = \left(\frac{r}{n}\right)^2 - 2\left(\frac{r}{n}\right)x + x^2,
+   \end{equation*}
+   multiply each term by $\binom{n}{r}x^r(1-x)^{n-r}$, and sum from $r=0$ to $n$, to give
+\end{frame}
+\begin{frame}{Proof cont'd}
+     \begin{align*}
+   \label{eqn2}
+       \sum_{r=0}^n\left(\frac{r}{n}-x\right)^2\binom{n}{r}x^r(1-x)^{n-r}&=B_n(x^2;x) - 2xB_n(x;x) + x^2B_n(1;x)\\&=
+       \frac{1}{n}x(1-x).
+   \end{align*}
+   For any fixed $x \in [0, 1]$, let us estimate the sum of the polynomials $p_{n, r}(x) = \binom{n}{r}x^r(1-x)^{n-r}$ over all values of $r$ for which $\frac{r}{n}$ is not close to $x$. To make this notion precise, we choose a number $\delta > 0$ and let $S_{\delta}$ denote the set of all values of $r$ satisfying $|\frac{r}{n}-x| \geq \delta$. We now consider the sum of the polynomials $p_{n, r}(x)$ over all $r \in S_\delta.$ Note that $|\frac{r}{n}-x|\geq\delta$ implies that
+\end{frame}
+\begin{frame}{Proof cont'd}
+     \begin{equation}
+   \label{eqn1}
+       \frac{1}{\delta^2}\left(\frac{r}{n}-x\right)^2\geq1.
+   \end{equation}
+   Then, using \eqref{eqn1}, we have 
+   \begin{equation*}
+       \sum_{r \in S_\delta}\binom{n}{r}x^r(1-x)^{n-r}\leq\frac{1}{\delta^2}\sum_{r\in S_\delta}\left(\frac{r}{n}-x\right)^2\binom{n}{r}x^r(1-x)^{n-r}.
+   \end{equation*}
+   The latter sum is not greater that the sum of the same expression over all $r$,so we have 
+   \begin{equation*}
+       \frac{1}{\delta^2}\sum_{r=0}^n\left(\frac{r}{n}-x\right)^2\binom{n}{r}x^r(1-x)^{n-r} = \frac{x(1-x)}{n\delta^2.}
+   \end{equation*}
+\end{frame}
+\begin{frame}{Proof cont'd}
+    Since $0\leq x(1-x) \leq \frac{1}{4}$ on $[0, 1]$, we have
+   \begin{equation}
+       \sum_{r \in S_\delta}\binom{n}{r}x^r(1-x)^{n-r} \leq \frac{1}{4n\delta^2}.
+       \label{eqn4}
+   \end{equation}
+   Let us write
+   \begin{equation*}
+       \sum_{r=0}^n = \sum_{r \in S_\delta} + \sum_{r\notin S_\delta},
+   \end{equation*}
+   where the latter sum is therefore over all $r$ such that $|\frac{r}{n}-x| < \delta$. Having split the summation into these two parts, we are now ready to estimate the difference between $f(x)$ and its \textit{Bernstein polynomial}. Using \eqref{bern_1}, we have
+\end{frame}
+\begin{frame}{Proof cont'd}
+     \begin{equation*}
+       f(x) - B_n(f;x) = \sum_{r=0}^n\left(f(x)-f\left(\frac{r}{n}\right)\right)\binom{n}{r}x^r(1-x)^{n-r},
+   \end{equation*}
+   and hence
+   \begin{align*}
+       f(x) - B_n(f;x)
+       &=\sum_{r\in S_\delta}\left(f(x)-f\left(\frac{r}{n}\right)\right)\binom{n}{r}x^r(1-x)^{n-r}\\
+       &+\sum_{r\notin S_\delta}\left(f(x)-f\left(\frac{r}{n}\right)\right)\binom{n}{r}x^r(1-x)^{n-r}.
+   \end{align*}
+   We thus obtain the inequality
+   \begin{align*}
+       \vert f(x)-B_n(f;x) \vert \leq \sum_{r\in S_\delta}\left |f(x)-f\left(\frac{r}{n}\right)\right|\binom{n}{r}x^r(1-x)^{n-r}\\+ \sum_{r \notin S_\delta}\left |f(x)-f\left(\frac{r}{n}\right)\right|\binom{n}{r}x^r(1-x)^{n-r}.
+   \end{align*}
+\end{frame}
+\begin{frame}{Proof cont'd}
+    Since $f \in C[0, 1]$, it is bounded on $[0, 1]$, and we have $|f(x)|\leq M,$ for some $M>0.$ We can therefore write
+   \begin{equation*}
+       \left | f(x) - f\left(\frac{r}{n}\right)\right| \leq 2M
+   \end{equation*}
+   for all $r$ and all $x \in [0, 1],$ and so 
+   \begin{equation*}
+       \sum_{r \in S_\delta}\left|f(x)-f\left(\frac{r}{n}\right)\right|\binom{n}{r}x^r(1-x)^{n-r}\leq 2M \sum_{r \in S_\delta}\binom{n}{r}x^r(1-x)^{n-r}.
+   \end{equation*}
+   On using \eqref{eqn4} we obtain
+   \begin{equation}
+       \label{eqn5}
+       \sum_{r \in S_\delta}\left|f(x) - f\left(\frac{r}{n}\right)\right|\binom{n}{r}x^r(1-x)^{n-r} \leq \frac{M}{2n\delta^2}
+   \end{equation}
+\end{frame}
+\begin{frame}{Proof cont'd}
+    Since $f$ is continuous, it is also uniformly continuous, on $[0, 1].$ Thus, corresponding to any choice of $\epsilon > 0$ there is a number $\delta>0,$ depending on $\epsilon$ and $f,$ such that
+   \begin{gather*}
+       |x-x_0|<\delta \quad \Rightarrow \quad |f(x)-f(x_0)|<\frac{\epsilon}{2},
+   \end{gather*}
+   for all ${x, x_0} \in [0, 1].$ Thus, for the sum over $r \notin S_\delta,$ we have
+   \begin{align*}
+       \sum_{r\notin S_\delta}\left|f(x)-f\left(\frac{r}{n}\right)\right|\binom{n}{r}x^r(1-x)^{n-r}
+        &<\frac{\epsilon}{2} \sum_{r \notin S_\delta}\binom{n}{r}x^r(1-x)^{n-r}\\
+        &<\frac{\epsilon}{2} \sum_{r=0}^n\binom{n}{r}x^r(1-x)^{n-r},
+   \end{align*}
+   and hence, again using \eqref{bern_1}, we find that
+   \begin{equation}
+       \sum_{r\notin S_\delta}\left|f(x)-f\left(\frac{r}{n}\right)\right|\binom{n}{r}x^r(1-x)^{n-r}<\frac{\epsilon}{2}.
+       \label{eqn-son}
+   \end{equation}
+\end{frame}
+\begin{frame}{Proof cont'd}
+     On combining \eqref{eqn4} and \eqref{eqn-son}, we obtain
+   \begin{equation*}
+       |f(x) - B_n(f;x)| < \frac{M}{2n\delta^2} + \frac{\epsilon}{2}.
+   \end{equation*}
+   It follows from the line above that if we choose $N>M/(e\delta^2)$, then
+   \begin{equation*}
+       |f(x) - B_n(f;x)| < \epsilon
+   \end{equation*}
+   for all $n\geq N,$ and this completes the proof.
+   \qedsymbol
+\end{frame}
+\section{References}
+\begin{frame}{References}
+    \printbibliography
+\end{frame}
+\section{}
+\frame{
+\frametitle{}
+\begin{center}
+\LARGE{\color{red}{Thank you for listening!}}
+\end{center}
+}
+\end{document}
